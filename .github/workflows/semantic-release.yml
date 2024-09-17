@@ -23,6 +23,7 @@ jobs:
           node-version: 20.11
       - name: changesets
         uses: changesets/action@v1
+        id: changesets
         with:
           createGithubReleases: true
           publish: pnpm changeset publish
