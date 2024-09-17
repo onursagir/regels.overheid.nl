@@ -31,7 +31,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     outputs:
       published: ${{ steps.changesets.outputs.published || 'false' }}
-      publishedPackages: ${{ steps.changesets.outputs.publishedPackages || '[]' }}
+      publishedPackages: ${{ steps.changesets.outputs.publishedPackages || '[{}]' }}
   release:
     needs: changesets
     if: needs.changesets.outputs.published
