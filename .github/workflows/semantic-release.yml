@@ -30,4 +30,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Echo Published Packages
         if: steps.changesets.outputs.published == 'true'
-        run: echo "Published Packages: ${{ steps.changesets.outputs.publishedPackages }}"
+        run: echo ${{ steps.changesets.outputs.publishedPackages }}
