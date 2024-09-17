@@ -30,8 +30,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     outputs:
-      published: ${{ steps.changesets.outputs.published }}
-      publishedPackages: ${{ steps.changesets.outputs.publishedPackages }}
+      published: ${{ steps.changesets.outputs.published || 'false' }}
+      publishedPackages: ${{ steps.changesets.outputs.publishedPackages || '[]' }}
   release:
     needs: changesets
     if: needs.changesets.outputs.published
@@ -40,4 +40,4 @@ jobs:
       matrix:
         package: ${{ fromJson(needs.changesets.outputs.publishedPackages) }}
     steps:
-      - run: echo "${{ matrix.package.name }}" "${{ matrix.package.version }}"
+      - uses: ./.github/actions/upgrade-helm

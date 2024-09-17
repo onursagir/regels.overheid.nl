@@ -1,38 +1,39 @@
-name: 'Push to the Docker registry'
-description: 'Push to the Docker registry'
+name: Build and push a Docker image
+description: Builds and pushes a Docker image of the given app (inside apps/).
 inputs:
-  app-name:
-    description: 'The name of the app to push, should match the folder name in apps/'
+  tag:
+    description: Version number of app
     required: true
-  digitalocean-access-token:
-    description: 'The DigitalOcean access token'
+  app:
+    description: The name of the app to push, should match the folder name in apps/
     required: true
   build-args:
-    description: 'The build args to pass to the Docker build'
+    description: "The build args to pass to the Docker build"
     required: false
+  acr-login-server:
+    description: Azure Container Registry access key login server
+    required: true
+  acr-username:
+    description: Azure Container Registry access key admin username
+    required: true
+  acr-password:
+    description: Azure Container Registry access key admin password
+    required: true
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-    - name: Install doctl
-      uses: digitalocean/action-doctl@v2
+    - uses: actions/checkout@v3
+    - uses: azure/docker-login@v1
       with:
-        token: ${{ inputs.digitalocean-access-token }}
-    - name: Login to Registry
-      shell: sh
-      run: doctl registry login
-    - name: Build and push
-      uses: docker/build-push-action@v3
+        login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+    - uses: docker/setup-buildx-action@v2
+    - uses: docker/build-push-action@v3
       with:
         context: .
         target: prod
-        file: apps/${{ inputs.app-name }}/Dockerfile
+        file: apps/${{ inputs.app }}/Dockerfile
         push: true
-        tags: registry.digitalocean.com/regels-overheid-nl/${{ inputs.app-name }}:${{ github.sha }},registry.digitalocean.com/regels-overheid-nl/${{ inputs.app-name }}:latest
+        tags: regels.azurecr.io/${{ inputs.app }}:${{ tag }},regels.azurecr.io/${{ inputs.app }}:latest
         build-args: ${{ inputs.build-args }}
-  
