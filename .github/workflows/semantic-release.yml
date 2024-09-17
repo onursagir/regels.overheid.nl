@@ -21,9 +21,13 @@ jobs:
         with:
           cache: pnpm
           node-version: 20.11
-      - uses: changesets/action@v1
+      - name: changesets
+        uses: changesets/action@v1
         with:
           createGithubReleases: true
           publish: pnpm changeset publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     - name: Echo Published Packages
+      if: steps.changesets.outputs.published == 'true'
+      run: echo "Published Packages: ${{ steps.changesets.outputs.publishedPackages }}"
