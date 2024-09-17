@@ -1,5 +1,12 @@
 # web
 
+## 3.19.5
+
+### Patch Changes
+
+- 53c8a9f: a
+- db4d421: b
+
 ## 3.19.4
 
 ### Patch Changes
