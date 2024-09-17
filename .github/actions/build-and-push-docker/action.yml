@@ -35,5 +35,5 @@ runs:
         target: prod
         file: apps/${{ inputs.app }}/Dockerfile
         push: true
-        tags: regels.azurecr.io/${{ inputs.app }}:${{ tag }},regels.azurecr.io/${{ inputs.app }}:latest
+        tags: regels.azurecr.io/${{ inputs.app }}:${{ inputs.tag }},regels.azurecr.io/${{ inputs.app }}:latest
         build-args: ${{ inputs.build-args }}
