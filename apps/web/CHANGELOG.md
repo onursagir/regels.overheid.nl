@@ -1,5 +1,11 @@
 # web
 
+## 3.19.6
+
+### Patch Changes
+
+- dc7ba65: c
+
 ## 3.19.5
 
 ### Patch Changes
