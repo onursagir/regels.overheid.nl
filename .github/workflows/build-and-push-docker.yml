@@ -16,7 +16,7 @@ jobs:
       - id: build-args
         run: |
           echo "BUILD_ARGS=$(cat ./.github/configs/production/build-args/web.env | sed 's/^/--build-arg /' | tr '\n' ' ')" >> $GITHUB_ENV
-      - run: "${{ format(env.BUILD_ARGS) }}"
+      - run: echo $BUILD_ARGS
       # - uses: ./.github/actions/build-and-push-docker
       #   with:
       #     app: web
