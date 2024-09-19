@@ -13,18 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v3
-
-      - name: Install jq
-        run: sudo apt-get install -y jq
-
-      - id: build-args
-        run: |
-          # Read the JSON file, encode it as a single-line string, and set it as an environment variable
-          BUILD_ARGS=$(jq -c '.' ./.github/configs/production/build-args/web.json)
-          echo "BUILD_ARGS=$BUILD_ARGS" >> $GITHUB_ENV
-
+      - id: set-build-args
+        run: ./.github/workflows/build-args/web.yml
       # Use the environment variable
-      - run: echo ${{ toJson(fromJson(env.BUILD_ARGS)) }}
+      - run: echo ${{ steps.set-build-args.outputs.set-build-args.build-args }}
       # - uses: ./.github/actions/build-and-push-docker
       #   with:
       #     app: web
