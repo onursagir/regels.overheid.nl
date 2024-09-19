@@ -1,24 +1,13 @@
 name: Build and push a Docker image to the registry
-on:
-  workflow_dispatch:
-    inputs:
-      app:
-        description: 'Environment to deploy to'
-        required: true
-        default: 'staging'
-      version:
-        description: 'Version to deploy'
-        required: true
+on: workflow_dispatch
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/build-and-push-docker
+      - uses: ./.github/actions/upgrade-helm
         with: 
-          tag: ${{ github.event.inputs.version }}
-          app: ${{ github.event.inputs.app }}
-          acr-login-server: ${{ secrets.ACR_LOGIN_SERVER }}
-          acr-username: ${{ secrets.ACR_USERNAME }}
-          acr-password: ${{ secrets.ACR_PASSWORD }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
