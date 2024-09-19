@@ -38,6 +38,6 @@ runs:
         file: apps/${{ inputs.app }}/Dockerfile
         push: true
         tags: regels.azurecr.io/${{ inputs.app }}:${{ inputs.tag }},regels.azurecr.io/${{ inputs.app }}:latest
-        build-args: ${{ env.BUILD_ARGS }}
+        build-args: ${{ format(env.BUILD_ARGS) }}
         cache-from: type=registry,ref=regels.azurecr.io/${{ inputs.app }}:buildcache
         cache-to: type=registry,ref=regels.azurecr.io/${{ inputs.app }}:buildcache,mode=max
