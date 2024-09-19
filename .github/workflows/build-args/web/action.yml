@@ -14,6 +14,6 @@ jobs:
         NEXT_PUBLIC_CMS_URL=https://regels.overheid.nl/cms
         WEB_URL=http://localhost:9000
         NEXT_PUBLIC_WEB_URL=https://regels.overheid.nl
-        " >> $GITHUB_OUTPUT
-    outputs:
-      build-args: ${{ steps.set-output.outputs.output }}
+        " >> $GITHUB_ENV
+    # outputs:
+    #   build-args: ${{ steps.set-output.outputs.output }}
