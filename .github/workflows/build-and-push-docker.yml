@@ -15,8 +15,12 @@ jobs:
       - uses: actions/checkout@v3
       - id: build-args
         run: |
-          echo "BUILD_ARGS=$(cat ./.github/configs/production/build-args/web.json)" >> $GITHUB_ENV
-      - run: echo ${{ fromJson(env.BUILD_ARGS) }} 
+          # Read the JSON file and set it as an environment variable
+          BUILD_ARGS=$(cat ./.github/configs/production/build-args/web.json)
+          echo "BUILD_ARGS=$BUILD_ARGS" >> $GITHUB_ENV
+
+      # Use the environment variable
+      - run: echo ${{ fromJson(env.BUILD_ARGS) }}
       # - uses: ./.github/actions/build-and-push-docker
       #   with:
       #     app: web
