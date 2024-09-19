@@ -24,7 +24,7 @@ jobs:
           echo "BUILD_ARGS=$BUILD_ARGS" >> $GITHUB_ENV
 
       # Use the environment variable
-      - run: echo ${{ fromJson(env.BUILD_ARGS) }}
+      - run: echo ${{ toJson(fromJson(env.BUILD_ARGS)) }}
       # - uses: ./.github/actions/build-and-push-docker
       #   with:
       #     app: web
