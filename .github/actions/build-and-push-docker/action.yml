@@ -7,9 +7,6 @@ inputs:
   app:
     description: The name of the app to push, should match the folder name in apps/
     required: true
-  build-args:
-    description: "The build args to pass to the Docker build"
-    required: false
   acr-login-server:
     description: Azure Container Registry access key login server
     required: true
@@ -29,6 +26,9 @@ runs:
         username: ${{ inputs.acr-username }}
         password: ${{ inputs.acr-password }}
     - uses: docker/setup-buildx-action@v2
+    - id: build-args
+      run: echo output=$(cat ./.github/configs/build-args/${{ inputs.app }}.env)>> $GITHUB_OUTPUT
+      shell: sh
     - uses: docker/build-push-action@v3
       with:
         context: .
@@ -36,4 +36,4 @@ runs:
         file: apps/${{ inputs.app }}/Dockerfile
         push: true
         tags: regels.azurecr.io/${{ inputs.app }}:${{ inputs.tag }},regels.azurecr.io/${{ inputs.app }}:latest
-        build-args: ${{ inputs.build-args }}
+        build-args: steps.build-args.output
