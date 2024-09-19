@@ -36,4 +36,4 @@ runs:
         file: apps/${{ inputs.app }}/Dockerfile
         push: true
         tags: regels.azurecr.io/${{ inputs.app }}:${{ inputs.tag }},regels.azurecr.io/${{ inputs.app }}:latest
-        build-args: steps.build-args.output
+        build-args: ${{ steps.build-args.output }}
