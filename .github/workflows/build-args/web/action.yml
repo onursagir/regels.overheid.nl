@@ -1,6 +1,5 @@
 name: Reusable Workflow
-on:
-  workflow_call:
+on: workflow_call
 jobs:
   perform-task:
     runs-on: ubuntu-latest
@@ -8,12 +7,7 @@ jobs:
       - name: Set output
         id: set-output
         run: | 
-        echo "output=
-        PUBLIC_URL=https://regels.overheid.nl/web/
-        CMS_URL=http://cms:9001
-        NEXT_PUBLIC_CMS_URL=https://regels.overheid.nl/cms
-        WEB_URL=http://localhost:9000
-        NEXT_PUBLIC_WEB_URL=https://regels.overheid.nl
-        " >> $GITHUB_ENV
-    # outputs:
-    #   build-args: ${{ steps.set-output.outputs.output }}
+          echo "MY_ENV_VAR=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+          echo "my-output=${{ secrets.DATABASE_URL }}" >> $GITHUB_OUTPUT
+    outputs:
+      my-output: ${{ steps.perform-task.outputs.my-output }}
