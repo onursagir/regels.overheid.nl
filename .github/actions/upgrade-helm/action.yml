@@ -13,6 +13,14 @@ inputs:
   github-token:
     description: ""
     required: true
+  tag: 
+    default: next
+    description: ""
+    required: true
+  app-name: 
+    default: docs
+    description: ""
+    required: true
 permissions:  
   id-token: write
   contents: read
@@ -35,8 +43,11 @@ runs:
         cluster-name: regels
         admin: false
         use-kubelogin: true
-    - run: kubectl get pods --namespace app 
+    - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
       shell: sh
+    - run: helm repo add regels-overheid-nl https://minbzk.github.io/helm.regels.overheid.nl/
+      shell: sh  
+    - run: helm upgrade --install --atomic --wait ${{ inputs.app-name }} regels-overheid-nl/${{ inputs.app-name }} --namespace app --set image.tag=${{ inputs.tag }}
 
 
 
