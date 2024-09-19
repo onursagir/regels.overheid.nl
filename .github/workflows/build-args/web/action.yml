@@ -1,5 +1,9 @@
 name: Reusable Workflow
-on: workflow_call
+on: 
+  workflow_call:
+    secrets:
+      DATABASE_URL:
+        required: true
 jobs:
   perform-task:
     runs-on: ubuntu-latest
