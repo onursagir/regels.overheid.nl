@@ -10,6 +10,9 @@ inputs:
   azure-subscription-id:
     description: ""
     required: true
+  github-token:
+    description: ""
+    required: true
 permissions:  
   id-token: write
   contents: read
@@ -24,6 +27,8 @@ runs:
         subscription-id: ${{ inputs.azure-subscription-id }}
     - uses: azure/setup-kubectl@v3
     - uses: azure/use-kubelogin@v1
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
     - uses: azure/aks-set-context@v3
       with:
         resource-group: regels.overheid.nl
