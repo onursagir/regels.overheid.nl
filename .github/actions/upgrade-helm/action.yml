@@ -13,15 +13,15 @@ inputs:
   github-token:
     description: ""
     required: true
-  tag: 
+  tag:
     default: next
     description: ""
     required: true
-  app-name: 
+  app-name:
     default: docs
     description: ""
     required: true
-permissions:  
+permissions:
   id-token: write
   contents: read
 runs:
@@ -46,8 +46,6 @@ runs:
     - run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
       shell: sh
     - run: helm repo add regels-overheid-nl https://minbzk.github.io/helm.regels.overheid.nl/
-      shell: sh  
+      shell: sh
     - run: helm upgrade --install --atomic --wait ${{ inputs.app-name }} regels-overheid-nl/${{ inputs.app-name }} --namespace app --set image.tag=${{ inputs.tag }}
-
-
-
+      shell: sh
