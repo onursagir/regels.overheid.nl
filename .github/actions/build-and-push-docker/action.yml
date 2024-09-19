@@ -31,13 +31,15 @@ runs:
         # Read and format the .env file into Docker build arguments
         echo "BUILD_ARGS=$(cat ./.github/configs/production/build-args/${{ inputs.app }}.env | sed 's/^/--build-arg /' | tr '\n' ' ')" >> $GITHUB_ENV
       shell: bash
-    - uses: docker/build-push-action@v3
-      with:
-        context: .
-        target: prod
-        file: apps/${{ inputs.app }}/Dockerfile
-        push: true
-        tags: regels.azurecr.io/${{ inputs.app }}:${{ inputs.tag }},regels.azurecr.io/${{ inputs.app }}:latest
-        build-args: ${{ format(env.BUILD_ARGS) }}
-        cache-from: type=registry,ref=regels.azurecr.io/${{ inputs.app }}:buildcache
-        cache-to: type=registry,ref=regels.azurecr.io/${{ inputs.app }}:buildcache,mode=max
+    - run: echo $BUILD_ARGS
+      shell: sh
+    # - uses: docker/build-push-action@v3
+    #   with:
+    #     context: .
+    #     target: prod
+    #     file: apps/${{ inputs.app }}/Dockerfile
+    #     push: true
+    #     tags: regels.azurecr.io/${{ inputs.app }}:${{ inputs.tag }},regels.azurecr.io/${{ inputs.app }}:latest
+    #     build-args: ${{ format(env.BUILD_ARGS) }}
+    #     cache-from: type=registry,ref=regels.azurecr.io/${{ inputs.app }}:buildcache
+    #     cache-to: type=registry,ref=regels.azurecr.io/${{ inputs.app }}:buildcache,mode=max
