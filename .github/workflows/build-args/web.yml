@@ -10,7 +10,6 @@ jobs:
         run: | 
         echo "output=
         PUBLIC_URL=https://regels.overheid.nl/web/
-        URL=secrets.DATABASE_URL
         CMS_URL=http://cms:9001
         NEXT_PUBLIC_CMS_URL=https://regels.overheid.nl/cms
         WEB_URL=http://localhost:9000
