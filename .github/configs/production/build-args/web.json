@@ -1,0 +1,8 @@
+{
+  "PUBLIC_URL": "https://regels.overheid.nl/web/",
+  "DATABASE_URL": "${{ secrets.DATABASE_URL }}",
+  "CMS_URL": "http://cms:9001",
+  "NEXT_PUBLIC_CMS_URL": "https://regels.overheid.nl/cms",
+  "WEB_URL": "http://localhost:9000",
+  "NEXT_PUBLIC_WEB_URL": "https://regels.overheid.nl"
+}
