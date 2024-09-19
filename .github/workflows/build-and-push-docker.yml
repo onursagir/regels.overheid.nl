@@ -1,6 +1,13 @@
 name: Build and push a Docker image to the registry
-on: workflow_dispatch
+on:   
+  workflow_dispatch:
+  push:
+    branches:
+      - main
 concurrency: ${{ github.workflow }}-${{ github.ref }}
+permissions:  
+  id-token: write
+  contents: read
 jobs:
   deploy:
     runs-on: ubuntu-latest
