@@ -20,18 +20,20 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v3
-    - uses: azure/docker-login@v1
-      with:
-        login-server: ${{ inputs.acr-login-server }}
-        username: ${{ inputs.acr-username }}
-        password: ${{ inputs.acr-password }}
-    - uses: docker/setup-buildx-action@v2
-    - id: build-args
-      run: |
-        # Read and format the .env file into Docker build arguments
-        echo "BUILD_ARGS=$(cat ./.github/configs/production/build-args/${{ inputs.app }}.env | sed 's/^/--build-arg /' | tr '\n' ' ')" >> $GITHUB_ENV
-      shell: bash
-    - run: "${{ format(env.BUILD_ARGS) }}"
+    # - uses: azure/docker-login@v1
+    #   with:
+    #     login-server: ${{ inputs.acr-login-server }}
+    #     username: ${{ inputs.acr-username }}
+    #     password: ${{ inputs.acr-password }}
+    # - uses: docker/setup-buildx-action@v2
+    # - id: build-args
+    #   run: |
+    #     # Read and format the .env file into Docker build arguments
+    #     echo "BUILD_ARGS=$(cat ./.github/configs/production/build-args/${{ inputs.app }}.env | sed 's/^/--build-arg /' | tr '\n' ' ')" >> $GITHUB_ENV
+    #   shell: bash
+    - run: ./.github/workflows/build-args/web.yml
+      id: set-build-args
+    - run: echo ${{ steps.set-build.args.outputs.build-args }}
       shell: sh
     # - uses: docker/build-push-action@v3
     #   with:
