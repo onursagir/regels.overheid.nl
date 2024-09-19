@@ -31,5 +31,7 @@ runs:
         admin: false
         use-kubelogin: true
     - run: kubectl get pods --namespace app 
+      shell: sh
+
 
 
