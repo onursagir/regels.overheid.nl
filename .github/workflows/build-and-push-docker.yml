@@ -10,7 +10,7 @@ permissions:
   contents: read
 jobs:
   call-workflow-passing-data:
-    uses: ./.github/workflows/build-args-web
+    uses: ./.github/workflows/build-args-web.yml
     secrets: inherit
   deploy:
     # needs: call-workflow-passing-data

@@ -14,4 +14,4 @@ jobs:
           echo "MY_ENV_VAR=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
           echo "my-output=${{ secrets.DATABASE_URL }}" >> $GITHUB_OUTPUT
     outputs:
-      my-output: ${{ steps.perform-task.outputs.my-output }}
+      my-output: ${{ steps.set-output.outputs.my-output }}
