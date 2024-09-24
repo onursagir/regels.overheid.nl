@@ -42,7 +42,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Build and push to registry
-        uses: ./.github/actions/build-and-push-docker
+        uses: ./.github/actions/docker-build-push-acr
         if: inputs.build-push
         with: 
           app: web
@@ -59,7 +59,7 @@ jobs:
             NEXT_PUBLIC_WEB_URL=https://regels.overheid.nl
       - name: Deploy/Upgrade Helm release
         if: inputs.deploy
-        uses: ./.github/actions/upgrade-helm
+        uses: ./.github/actions/helm-upgrade-install-release
         with: 
           release-name: web
           tag: ${{ inputs.version }}
