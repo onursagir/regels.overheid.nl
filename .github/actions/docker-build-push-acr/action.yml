@@ -1,5 +1,5 @@
-name: Build and push a Docker image
-description: Builds and pushes a Docker image of the given app (inside apps/).
+name: Docker Build and Push to ACR
+description: Builds and pushes a Docker image of the given app (inside apps/) to Azure Container Registry (ACR).
 inputs:
   tag:
     description: Tag of the image, should be the version number of app

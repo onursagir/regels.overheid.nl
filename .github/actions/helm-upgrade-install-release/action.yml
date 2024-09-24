@@ -1,25 +1,23 @@
-name: "Upgrade Helm release"
-description: "Upgrade Helm release"
+name: Helm Upgrade/Install Release
+description: This action upgrades or installs a Helm release on an AKS cluster using Azure authentication, setting the desired Docker image tag for the release.
 inputs:
   azure-client-id:
-    description: ""
+    description: Azure Service Principal client ID for authentication.
     required: true
   azure-tenant-id:
-    description: ""
+    description: Azure tenant ID for authentication.
     required: true
   azure-subscription-id:
-    description: ""
+    description: Azure subscription ID for selecting the correct subscription.
     required: true
   github-token:
-    description: ""
+    description: GitHub token for authenticating with GitHub Actions to manage identity and access control.
     required: true
   tag:
-    default: next
-    description: ""
+    description: The Docker image tag to use for the release (e.g., 'latest' or a version number).
     required: true
   release-name:
-    default: docs
-    description: ""
+    description: The name of the Helm release to upgrade or install.
     required: true
 permissions:
   id-token: write
