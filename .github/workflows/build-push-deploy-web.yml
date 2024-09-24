@@ -8,11 +8,11 @@ on:
         required: true
       build-push:
         type: boolean
-        required: true
+        required: false
         default: true
       deploy:
         type: boolean
-        required: true
+        required: false
         default: true
   workflow_dispatch:
     inputs: 
