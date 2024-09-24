@@ -43,7 +43,7 @@ export default async function BlogArticlePage(props: Props) {
       <Container component="main" className="pb-8 pt-14">
         <header>
           <Button component={Link} variant="text" startIcon={<IconArrowLeft />} href="/blog">
-            Overzicht
+            Overzicht???
           </Button>
           <Typography variant="h1" className="mb-12 mt-4 ">
             {blogArticle.title}
