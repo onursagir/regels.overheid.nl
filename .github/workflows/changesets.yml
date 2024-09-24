@@ -40,11 +40,11 @@ jobs:
   release:
     needs: changesets
     if: needs.changesets.outputs.published
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         package: ${{ fromJson(needs.changesets.outputs.publishedPackages) }}
-    steps:  
-      - uses: actions/checkout@v3
-      - if: ${{ matrix.package.name == 'web' }}
-        uses: ./.github/workflows/build-push-deploy-web.yml
+    uses: ./.github/workflows/changesets-gateway.yml
+    secrets: inherit
+    with: 
+      name: ${{ matrix.package.name }}
+      version: ${{ matrix.package.version }}

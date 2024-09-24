@@ -1,0 +1,17 @@
+name: Changesets - Gateway
+on: 
+  workflow_call:
+    inputs: 
+      name: 
+        type: string
+        required: true
+      version: 
+        type: string
+        required: true
+jobs:
+  release-web:
+    if: ${{ inputs.name == 'web' }}
+    uses: ./.github/workflows/build-push-deploy-web.yml
+    secrets: inherit
+    with: 
+      version: ${{ inputs.version }}
