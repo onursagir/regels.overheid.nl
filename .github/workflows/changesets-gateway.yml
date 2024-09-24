@@ -9,9 +9,16 @@ on:
         type: string
         required: true
 jobs:
+  release-cms:
+    if: ${{ inputs.name == 'cms' }}
+    uses: ./.github/workflows/build-push-deploy-cms.yml
+    secrets: inherit
+    with: 
+      version: ${{ inputs.version }}
   release-web:
     if: ${{ inputs.name == 'web' }}
     uses: ./.github/workflows/build-push-deploy-web.yml
     secrets: inherit
     with: 
       version: ${{ inputs.version }}
+      
