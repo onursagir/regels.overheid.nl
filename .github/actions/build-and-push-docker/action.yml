@@ -29,11 +29,6 @@ runs:
         username: ${{ inputs.acr-username }}
         password: ${{ inputs.acr-password }}
     - uses: docker/setup-buildx-action@v2
-    - id: build-args
-      run: |
-        # Read and format the .env file into Docker build arguments
-        echo "BUILD_ARGS=$(cat ./.github/configs/production/build-args/${{ inputs.app }}.env | sed 's/^/--build-arg /' | tr '\n' ' ')" >> $GITHUB_ENV
-      shell: bash
     - uses: docker/build-push-action@v3
       with:
         context: .
@@ -41,6 +36,6 @@ runs:
         file: apps/${{ inputs.app }}/Dockerfile
         push: true
         tags: regels.azurecr.io/${{ inputs.app }}:${{ inputs.tag }},regels.azurecr.io/${{ inputs.app }}:latest
-        build-args: ${{ format(env.BUILD_ARGS) }}
+        build-args: ${{ inputs.build-args }}
         cache-from: type=registry,ref=regels.azurecr.io/${{ inputs.app }}:buildcache
         cache-to: type=registry,ref=regels.azurecr.io/${{ inputs.app }}:buildcache,mode=max
