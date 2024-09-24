@@ -1,4 +1,4 @@
-name: Release
+name: Changesets
 on:
   push:
     branches:
@@ -45,5 +45,6 @@ jobs:
       matrix:
         package: ${{ fromJson(needs.changesets.outputs.publishedPackages) }}
     steps:  
+      - uses: actions/checkout@v3
       - if: ${{ matrix.package.name == 'web' }}
         uses: ./.github/workflows/build-push-deploy-web.yml
