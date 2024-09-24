@@ -36,7 +36,7 @@ jobs:
       - run: echo 'hello'
     outputs:
       published: 'true'
-      publishedPackages: '[{"name": "web", "version": "3.2.0"}]'
+      publishedPackages: '[]'
   release:
     needs: changesets
     if: needs.changesets.outputs.published
@@ -48,3 +48,5 @@ jobs:
     with: 
       name: ${{ matrix.package.name }}
       version: ${{ matrix.package.version }}
+
+      # {"name": "web", "version": "3.2.0"}
