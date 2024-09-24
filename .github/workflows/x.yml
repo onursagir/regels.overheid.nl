@@ -1,9 +1,10 @@
-name: Reusable Workflow
+name: X
 on: 
   workflow_call:
-    secrets:
-      DATABASE_URL:
+    inputs:
+      target:
         required: true
+        type: string
 jobs:
   perform-task:
     runs-on: ubuntu-latest

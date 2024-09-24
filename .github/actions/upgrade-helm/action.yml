@@ -17,7 +17,7 @@ inputs:
     default: next
     description: ""
     required: true
-  app-name:
+  release-name:
     default: docs
     description: ""
     required: true
@@ -47,5 +47,5 @@ runs:
       shell: sh
     - run: helm repo add regels-overheid-nl https://minbzk.github.io/helm.regels.overheid.nl/
       shell: sh
-    - run: helm upgrade --install --atomic --wait ${{ inputs.app-name }} regels-overheid-nl/${{ inputs.app-name }} --namespace app --set image.tag=${{ inputs.tag }}
+    - run: helm upgrade --install --atomic --wait ${{ inputs.release-name }} regels-overheid-nl/${{ inputs.release-name }} --namespace app --set image.tag=${{ inputs.tag }}
       shell: sh

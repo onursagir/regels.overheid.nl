@@ -1,0 +1,14 @@
+name: Changesets
+on:
+  push:
+    branches:
+      - main
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+jobs:
+  release:
+    strategy:
+      matrix:
+        package: ['web']
+    uses: ./.github/workflows/changesets-gateway.yml
+    with: 
+      package: ${{ matrix.package }}
