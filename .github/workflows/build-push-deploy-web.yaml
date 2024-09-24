@@ -28,6 +28,9 @@ on:
         type: boolean
         required: true
         default: true
+permissions:
+  id-token: write
+  contents: read
 jobs: 
   build-push-deploy:
     runs-on: ubuntu-latest
