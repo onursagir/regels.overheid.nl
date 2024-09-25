@@ -15,6 +15,7 @@ jobs:
       version: ${{ fromJson(inputs.packages).cms.version }}
   release-web:
     if: ${{ fromJson(inputs.packages).web != null }}
+    name: Release Web (${{ fromJson(inputs.packages).web.version }})
     uses: ./.github/workflows/build-push-deploy-web.yml
     secrets: inherit
     with: 
