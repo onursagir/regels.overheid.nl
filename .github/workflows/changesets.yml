@@ -36,7 +36,7 @@ jobs:
       - run: echo 'hello'
     outputs:
       published: 'true'
-      publishedPackages: '[{"name": "web", "version": "6.0.0"}, {"name": "cms", "version": "7.0.0"}, {"name": "docs", "version": "8.0.0"}, {"name": "docs-beta", "version": "9.0.0"}]'
+      publishedPackages: '[{"name": "web", "version": "6.1.0"}, {"name": "cms", "version": "7.1.0"}, {"name": "docs", "version": "8.1.0"}, {"name": "docs-beta", "version": "9.1.0"}]'
   transform-changesets-output: 
     needs: changesets
     if: needs.changesets.outputs.published

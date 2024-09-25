@@ -20,3 +20,18 @@ jobs:
     secrets: inherit
     with: 
       version: ${{ fromJson(inputs.packages).web.version }}
+  release-docs:
+    if: ${{ fromJson(inputs.packages).docs != null }}
+    name: Release Docs (${{ fromJson(inputs.packages).docs.version }})
+    uses: ./.github/workflows/build-push-deploy-docs.yml
+    secrets: inherit
+    with: 
+      version: ${{ fromJson(inputs.packages).docs.version }}
+  release-docs-beta:
+    if: ${{ fromJson(inputs.packages).docs.beta != null }}
+    name: Release Docs-Beta (${{ fromJson(inputs.packages).docs-beta.version }})
+    uses: ./.github/workflows/build-push-deploy-docs-beta.yml
+    secrets: inherit
+    with: 
+      version: ${{ fromJson(inputs.packages).docs-beta.version }}
+
