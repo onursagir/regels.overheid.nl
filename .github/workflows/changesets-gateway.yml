@@ -21,4 +21,15 @@ jobs:
     secrets: inherit
     with: 
       version: ${{ inputs.version }}
-      
+  release-docs:
+    if: ${{ inputs.name == 'docs' }}
+    uses: ./.github/workflows/build-push-deploy-web.yml
+    secrets: inherit
+    with: 
+      version: ${{ inputs.version }}
+  release-docs-beta:
+    if: ${{ inputs.name == 'docs-beta' }}
+    uses: ./.github/workflows/build-push-deploy-web.yml
+    secrets: inherit
+    with: 
+      version: ${{ inputs.version }}
