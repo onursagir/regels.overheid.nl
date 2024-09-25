@@ -39,6 +39,7 @@ jobs:
       publishedPackages: '[{"name": "web", "version": "6.0.0"}, {"name": "cms", "version": "7.0.0"}, {"name": "docs", "version": "8.0.0"}, {"name": "docs-beta", "version": "9.0.0"}]'
   transform-changesets-output: 
     needs: changesets
+    if: needs.changesets.outputs.published
     runs-on: ubuntu-latest
     steps: 
       - id: transform
@@ -48,18 +49,14 @@ jobs:
     outputs: 
       publishedPackages: ${{ steps.transform.outputs.transformed }}
   deploy-apps:
-    needs: transform-changesets-output
-    runs-on: ubuntu-latest
-    steps: 
-      - run: echo ${{ needs.transform-changesets-output.outputs.publishedPackages }}
-    # needs: 
-    #   - changesets
-    #   - convert-changesets-output
-    # if: needs.changesets.outputs.published
-    # uses: ./.github/workflows/changesets-gateway.yml
-    # secrets: inherit
-    # with: 
-    #   name: ${{ needs.changesets.outputs.publishedPackages }}
+    needs: 
+      - changesets
+      - transform-changesets-output
+    if: needs.changesets.outputs.published
+    uses: ./.github/workflows/changesets-gateway.yml
+    secrets: inherit
+    with: 
+      packages: ${{ needs.changesets.outputs.publishedPackages }}
   # release:
   #   needs: changesets
   #   if: needs.changesets.outputs.published

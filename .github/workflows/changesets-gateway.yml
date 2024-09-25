@@ -7,8 +7,14 @@ on:
         required: true
 jobs:
   release-cms:
-    if: ${{ fromJson(inputs.packages) |  }}
+    if: ${{ fromJson(inputs.packages).cms  }}
     uses: ./.github/workflows/build-push-deploy-cms.yml
     secrets: inherit
     with: 
-      version: ${{ inputs.version }}
+      version: ${{ fromJson(inputs.packages).cms.version }}
+  release-web:
+    if: ${{ fromJson(inputs.packages).foo  }}
+    uses: ./.github/workflows/build-push-deploy-web.yml
+    secrets: inherit
+    with: 
+      version: ${{ fromJson(inputs.packages).web.version }}
