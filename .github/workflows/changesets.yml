@@ -43,7 +43,7 @@ jobs:
     steps: 
       - id: transform
         run: |
-          transformed=$(echo '${{ needs.changesets.outputs.publishedPackages }}' | jq 'map({(.name): {version: .version}}) | add')
+          transformed=$(echo '${{ needs.changesets.outputs.publishedPackages }}' | jq -c 'map({(.name): {version: .version}}) | add')
           echo "transformed=$transformed" >> "$GITHUB_OUTPUT"
     outputs: 
       publishedPackages: ${{ steps.transform.outputs.transformed }}
