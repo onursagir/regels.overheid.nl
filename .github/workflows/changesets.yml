@@ -37,16 +37,39 @@ jobs:
     outputs:
       published: 'true'
       publishedPackages: '[{"name": "web", "version": "5.0.0"}, {"name": "cms", "version": "5.0.0"}, {"name": "docs", "version": "5.0.0"}, {"name": "docs-beta", "version": "5.0.0"}]'
-  release:
+  transform-changesets-output: 
     needs: changesets
-    if: needs.changesets.outputs.published
-    strategy:
-      matrix:
-        package: ${{ fromJson(needs.changesets.outputs.publishedPackages) }}
-    uses: ./.github/workflows/changesets-gateway.yml
-    secrets: inherit
-    with: 
-      name: ${{ matrix.package.name }}
-      version: ${{ matrix.package.version }}
+    runs-on: ubuntu-latest
+    steps: 
+      - id: transform
+        run: |
+          transformed=$(echo '${{ needs.changesets.outputs.publishedPackages }}' | jq 'map({(.name): {version: .version}}) | add')
+          echo "::set-output name=transformed::$transformed"
+    outputs: 
+      publishedPackages: ${{ steps.transform.outputs.transformed }} 
+  release:
+    needs: transform-changesets-output
+    runs-on: ubuntu-latest
+    steps: 
+      - run: echo ${{ needs.transform-changesets-output.outputs.publishedPackages }}
+    # needs: 
+    #   - changesets
+    #   - convert-changesets-output
+    # if: needs.changesets.outputs.published
+    # uses: ./.github/workflows/changesets-gateway.yml
+    # secrets: inherit
+    # with: 
+    #   name: ${{ needs.changesets.outputs.publishedPackages }}
+  # release:
+  #   needs: changesets
+  #   if: needs.changesets.outputs.published
+  #   strategy:
+  #     matrix:
+  #       package: ${{ fromJson(needs.changesets.outputs.publishedPackages) }}
+  #   uses: ./.github/workflows/changesets-gateway.yml
+  #   secrets: inherit
+  #   with: 
+  #     name: ${{ matrix.package.name }}
+  #     version: ${{ matrix.package.version }}
 
       # {"name": "web", "version": "5.0.0"}
