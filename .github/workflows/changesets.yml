@@ -43,10 +43,10 @@ jobs:
     steps: 
       - id: transform
         run: |
-          transformed=$('${{ needs.changesets.outputs.publishedPackages }}' | jq 'map({(.name): {version: .version}}) | add')
+          transformed=$(echo '${{ needs.changesets.outputs.publishedPackages }}' | jq 'map({(.name): {version: .version}}) | add')
           echo "transformed=$transformed" >> "$GITHUB_OUTPUT"
     outputs: 
-      publishedPackages: ${{ steps.transform.outputs.transformed }} 
+      publishedPackages: ${{ steps.transform.outputs.transformed }}
   deploy-apps:
     needs: transform-changesets-output
     runs-on: ubuntu-latest
