@@ -36,7 +36,7 @@ jobs:
       - run: echo 'hello'
     outputs:
       published: 'true'
-      publishedPackages: '[{"name": "web", "version": "5.0.0"}, {"name": "cms", "version": "5.0.0"}, {"name": "docs", "version": "5.0.0"}, {"name": "docs-beta", "version": "5.0.0"}]'
+      publishedPackages: '[{"name": "web", "version": "6.0.0"}, {"name": "cms", "version": "7.0.0"}, {"name": "docs", "version": "8.0.0"}, {"name": "docs-beta", "version": "9.0.0"}]'
   transform-changesets-output: 
     needs: changesets
     runs-on: ubuntu-latest
@@ -44,10 +44,10 @@ jobs:
       - id: transform
         run: |
           transformed=$(echo '${{ needs.changesets.outputs.publishedPackages }}' | jq 'map({(.name): {version: .version}}) | add')
-          echo "::set-output name=transformed::$transformed"
+          echo "transformed=$transformed" >> "$GITHUB_OUTPUT"
     outputs: 
       publishedPackages: ${{ steps.transform.outputs.transformed }} 
-  release:
+  deploy-apps:
     needs: transform-changesets-output
     runs-on: ubuntu-latest
     steps: 
