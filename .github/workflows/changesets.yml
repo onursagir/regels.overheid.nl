@@ -56,7 +56,7 @@ jobs:
     uses: ./.github/workflows/changesets-gateway.yml
     secrets: inherit
     with: 
-      packages: ${{ needs.changesets.outputs.publishedPackages }}
+      packages: ${{ needs.transform-changesets-output.outputs.publishedPackages }}
   # release:
   #   needs: changesets
   #   if: needs.changesets.outputs.published

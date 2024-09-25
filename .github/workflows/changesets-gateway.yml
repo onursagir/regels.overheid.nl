@@ -8,6 +8,7 @@ on:
 jobs:
   release-cms:
     if: ${{ fromJson(inputs.packages).cms != null }}
+    name: Release CMS (${{ fromJson(inputs.packages).cms.version }})
     uses: ./.github/workflows/build-push-deploy-cms.yml
     secrets: inherit
     with: 
