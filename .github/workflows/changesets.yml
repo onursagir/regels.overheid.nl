@@ -12,13 +12,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20.11
-      - run: npm i -g @changesets/cli@2.27
       - name: changesets
         id: changesets
         uses: changesets/action@v1
         with:
           createGithubReleases: true
-          publish: npx @changesets/cli@2.27 publish
+          publish: npx -y @changesets/cli@2.27 publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     outputs:
