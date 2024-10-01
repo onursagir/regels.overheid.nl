@@ -5,38 +5,25 @@ on:
       - main
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 jobs:
-  # changesets:
-  #   name: Release
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: pnpm/action-setup@v2
-  #       with:
-  #         version: 8.9.0
-  #         run_install: true
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         cache: pnpm
-  #         node-version: 20.11
-  #     - name: changesets
-  #       id: changesets
-  #       uses: changesets/action@v1
-  #       with:
-  #         createGithubReleases: true
-  #         publish: pnpm changeset publish
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #   outputs:
-  #     published: ${{ steps.changesets.outputs.published || 'false' }}
-  #     publishedPackages: ${{ steps.changesets.outputs.publishedPackages || '[{}]' }}
-
   changesets:
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'hello'
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: npm
+          node-version: 20.11
+      - name: changesets
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          createGithubReleases: true
+          publish: npx @changesets/cli@2.27 publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     outputs:
-      published: 'true'
-      publishedPackages: '[{"name": "web", "version": "6.1.0"}, {"name": "cms", "version": "7.1.0"}, {"name": "docs", "version": "8.1.0"}, {"name": "docs-beta", "version": "9.1.0"}]'
+      published: ${{ steps.changesets.outputs.published || 'false' }}
+      publishedPackages: ${{ steps.changesets.outputs.publishedPackages || '[{}]' }}
   transform-changesets-output: 
     needs: changesets
     if: needs.changesets.outputs.published
@@ -57,16 +44,3 @@ jobs:
     secrets: inherit
     with: 
       packages: ${{ needs.transform-changesets-output.outputs.publishedPackages }}
-  # release:
-  #   needs: changesets
-  #   if: needs.changesets.outputs.published
-  #   strategy:
-  #     matrix:
-  #       package: ${{ fromJson(needs.changesets.outputs.publishedPackages) }}
-  #   uses: ./.github/workflows/changesets-gateway.yml
-  #   secrets: inherit
-  #   with: 
-  #     name: ${{ matrix.package.name }}
-  #     version: ${{ matrix.package.version }}
-
-      # {"name": "web", "version": "5.0.0"}
