@@ -1,5 +1,11 @@
 # docs-beta
 
+## 1.1.2
+
+### Patch Changes
+
+- b83ac28: asd
+
 ## 1.1.1
 
 ### Patch Changes

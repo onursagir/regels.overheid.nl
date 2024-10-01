@@ -1,5 +1,11 @@
 # docs
 
+## 3.8.2
+
+### Patch Changes
+
+- b83ac28: asd
+
 ## 3.8.1
 
 ### Patch Changes
