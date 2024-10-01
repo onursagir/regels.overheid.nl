@@ -9,14 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          cache: pnpm
-          node-version: 20.11
       - uses: pnpm/action-setup@v2
         with:
           version: 8.9.0
           run_install: true
+      - uses: actions/setup-node@v3
+        with:
+          cache: pnpm
+          node-version: 20.11
       - name: changesets
         id: changesets
         uses: changesets/action@v1
